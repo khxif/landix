@@ -1,8 +1,11 @@
+import { auth } from '@/auth';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { CodeXmlIcon } from 'lucide-react';
 import Image from 'next/image';
 
-export default function Projects() {
+export default async function Projects() {
+  const session = await auth();
+  console.log(session)
   return (
     <main className="max-w-7xl mx-auto py-8 flex flex-col space-y-8 px-5 md:px-0">
       <h1 className="text-2xl font-medium">Your Projects</h1>
