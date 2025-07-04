@@ -6,8 +6,8 @@ import { useTRPC } from '@/trpc/client';
 export default function Home() {
   const trpc = useTRPC();
 
-  const greeting = useQuery(trpc.hello.queryOptions({ text: 'world' }));
-  if (!greeting.data) return <div>Loading...</div>;
+  const { data } = useQuery(trpc.projects.getAll.queryOptions());
+  console.log(data);
 
-  return <div>{greeting.data.greeting}</div>;
+  return <div>{'ygu'}</div>;
 }
