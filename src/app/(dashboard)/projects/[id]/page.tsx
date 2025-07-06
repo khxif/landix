@@ -10,12 +10,13 @@ import { cn } from '@/lib/utils';
 import { useTRPC } from '@/trpc/client';
 import { useQuery } from '@tanstack/react-query';
 import { ArrowLeftIcon, CopyIcon } from 'lucide-react';
+import Link from 'next/link';
 import React, { use } from 'react';
 
 export default function ProjectPreview({ params }: { params: Promise<{ id: string }> }) {
   const trpc = useTRPC();
-  const { id } = use(params);
 
+  const { id } = use(params);
   const { data: messages } = useQuery(
     trpc.messages.getAll.queryOptions({ projectId: id }, { refetchInterval: 4000 }),
   );
@@ -35,8 +36,13 @@ export default function ProjectPreview({ params }: { params: Promise<{ id: strin
   return (
     <ResizablePanelGroup direction="horizontal" className="h-full">
       <ResizablePanel defaultSize={35} className="h-full flex flex-col p-2 relative">
-        <nav className='p-4 border-b'>
-          <ArrowLeftIcon className='size-5' />
+        <nav className="p-4 border-b">
+          <Link
+            href="/projects"
+            className="flex items-center space-x-2 text-gray-600 hover:text-gray-900"
+          >
+            <ArrowLeftIcon className="size-5" />
+          </Link>
         </nav>
 
         <div className="flex flex-col overflow-y-auto space-y-4 flex-1 pt-4 pb-8 scrollbar-hide">
@@ -71,7 +77,9 @@ export default function ProjectPreview({ params }: { params: Promise<{ id: strin
 
         <MessageInput id={id} />
       </ResizablePanel>
-      <ResizableHandle className='hidden md:block'/>
+
+      <ResizableHandle className="hidden md:block" />
+
       <ResizablePanel defaultSize={65} className="overflow-y-scroll h-full hidden md:block">
         <nav className="p-4 h-full">
           <Tabs defaultValue="demo" className="overflow-y-scroll h-full space-y-1">
@@ -79,6 +87,7 @@ export default function ProjectPreview({ params }: { params: Promise<{ id: strin
               <TabsTrigger value="demo">Demo</TabsTrigger>
               <TabsTrigger value="code">Code</TabsTrigger>
             </TabsList>
+
             <div className="flex items-center space-x-4">
               <div className="p-2 px-4 border rounded-lg flex-1">
                 <p>{`https://${id}.localhost:3000`}</p>
@@ -87,6 +96,7 @@ export default function ProjectPreview({ params }: { params: Promise<{ id: strin
                 <CopyIcon />
               </Button>
             </div>
+
             <TabsContent value="demo" className="h-full">
               <CodePreview code={selectedFragment?.code ?? ''} />
             </TabsContent>

@@ -6,6 +6,11 @@ export const projectSchema = z.object({
 });
 export type ProjectSchemaType = z.infer<typeof projectSchema>;
 
+export const getProjectsSchema = z.object({
+  userId: z.string().min(1, 'User ID is required'),
+});
+export type GetProjectsSchemaType = z.infer<typeof getProjectsSchema>;
+
 export const sendMessageSchema = z.object({
   message: z.string().min(1, 'Message is required'),
 });

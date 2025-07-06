@@ -13,7 +13,7 @@ export function ProjectView({ userId }: { userId: string }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const trpc = useTRPC();
-  const { data: projects } = useSuspenseQuery(trpc.projects.getAll.queryOptions());
+  const { data: projects } = useSuspenseQuery(trpc.projects.getAll.queryOptions({ userId }));
 
   return (
     <main className="max-w-7xl mx-auto py-8 flex flex-col space-y-8 px-5 md:px-0">

@@ -1,17 +1,17 @@
 import { connectDb } from '@/lib/utils';
 import { Project } from '@/models/Project';
 import { baseProcedure, createTRPCRouter } from '@/trpc/init';
-import { projectSchema } from '@/zod-schemas/project';
+import { getProjectsSchema, projectSchema } from '@/zod-schemas/project';
 import { TRPCError } from '@trpc/server';
 
 export const projectRouter = createTRPCRouter({
-  getAll: baseProcedure.query(async () => {
+  getAll: baseProcedure.input(getProjectsSchema).query(async ({ input }) => {
     await connectDb();
 
-    const projects = await Project.find();
+    const projects = await Project.find({ createdBy: input.userId });
     return projects;
   }),
-  
+
   create: baseProcedure.input(projectSchema).mutation(async ({ input }) => {
     await connectDb();
 
