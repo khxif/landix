@@ -9,7 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
 import { useTRPC } from '@/trpc/client';
 import { useQuery } from '@tanstack/react-query';
-import { CopyIcon } from 'lucide-react';
+import { ArrowLeftIcon, CopyIcon } from 'lucide-react';
 import React, { use } from 'react';
 
 export default function ProjectPreview({ params }: { params: Promise<{ id: string }> }) {
@@ -35,7 +35,11 @@ export default function ProjectPreview({ params }: { params: Promise<{ id: strin
   return (
     <ResizablePanelGroup direction="horizontal" className="h-full">
       <ResizablePanel defaultSize={35} className="h-full flex flex-col p-2 relative">
-        <div className="flex flex-col overflow-y-auto space-y-4 flex-1">
+        <nav className='p-4 border-b'>
+          <ArrowLeftIcon className='size-5' />
+        </nav>
+
+        <div className="flex flex-col overflow-y-auto space-y-4 flex-1 pt-4 pb-8 scrollbar-hide">
           {messages?.map(message => (
             <div
               key={message._id}
@@ -67,8 +71,8 @@ export default function ProjectPreview({ params }: { params: Promise<{ id: strin
 
         <MessageInput id={id} />
       </ResizablePanel>
-      <ResizableHandle />
-      <ResizablePanel defaultSize={65} className="overflow-y-scroll h-full">
+      <ResizableHandle className='hidden md:block'/>
+      <ResizablePanel defaultSize={65} className="overflow-y-scroll h-full hidden md:block">
         <nav className="p-4 h-full">
           <Tabs defaultValue="demo" className="overflow-y-scroll h-full space-y-1">
             <TabsList>

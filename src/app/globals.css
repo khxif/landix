@@ -1,7 +1,8 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'tailwind-scrollbar-hide/v4';
 
-body{
+body {
   height: 100svh;
   overflow-y: hidden;
 }
