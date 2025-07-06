@@ -28,7 +28,7 @@ export function ProjectView({ userId }: { userId: string }) {
         </Card>
 
         {projects.map(project => (
-          <Link href={`/dashboard/projects/${project._id}`} key={project._id}>
+          <Link href={`/projects/${project._id}`} key={project._id}>
             <Card>
               <CardContent className="flex flex-col space-y-10">
                 <CardHeader>
