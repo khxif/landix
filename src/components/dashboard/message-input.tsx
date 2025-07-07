@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { Button } from '../ui/button';
 import { Textarea } from '../ui/textarea';
+import { ArrowUpIcon } from 'lucide-react';
 
 interface MessageInputProps {
   id: string;
@@ -31,22 +32,31 @@ export function MessageInput({ id }: MessageInputProps) {
     form.reset();
   }
   return (
-    <footer className="sticky left-0 bottom-0 flex flex-col border p-2 space-y-2 w-full">
+    <footer
+      className="sticky left-0 bottom-0 flex flex-col border rounded-lg 
+     px-2 py-4 space-y-2 w-full bg-inherit"
+    >
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="flex items-center space-x-2">
           <FormField
             control={form.control}
             name="message"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="flex-1">
                 <FormControl>
-                  <Textarea placeholder="Enter a prompt..." {...field} />
+                  <Textarea
+                    placeholder="Generate a lading page for the company name..."
+                    {...field}
+                    rows={5}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button type="submit" className="rounded-full">
+            <ArrowUpIcon />
+          </Button>
         </form>
       </Form>
     </footer>

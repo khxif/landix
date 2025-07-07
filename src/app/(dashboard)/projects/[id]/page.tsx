@@ -10,13 +10,19 @@ import { cn } from '@/lib/utils';
 import { useTRPC } from '@/trpc/client';
 import { useQuery } from '@tanstack/react-query';
 import { ArrowLeftIcon, CopyIcon } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import React, { use } from 'react';
 
 export default function ProjectPreview({ params }: { params: Promise<{ id: string }> }) {
   const trpc = useTRPC();
+  const session = useSession();
 
   const { id } = use(params);
+  const { data: project } = useQuery(
+    trpc.projects.getById.queryOptions({ userId: session?.data?.user?.id as string, projectId: id }),
+  );
+
   const { data: messages } = useQuery(
     trpc.messages.getAll.queryOptions({ projectId: id }, { refetchInterval: 4000 }),
   );
@@ -90,7 +96,7 @@ export default function ProjectPreview({ params }: { params: Promise<{ id: strin
 
             <div className="flex items-center space-x-4">
               <div className="p-2 px-4 border rounded-lg flex-1">
-                <p>{`https://${id}.localhost:3000`}</p>
+                <p>{`https://${project?.title}.${process.env.NEXT_PUBLIC_DOMAIN}`}</p>
               </div>
               <Button variant="outline">
                 <CopyIcon />

@@ -1,9 +1,8 @@
 import { auth } from '@/auth';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { CrownIcon } from 'lucide-react';
 import Image from 'next/image';
+import { UserButton } from '../core/user-button';
 
 export async function Header() {
   const session = await auth();
@@ -24,17 +23,7 @@ export async function Header() {
           Premium
         </Button>
 
-        <Popover>
-          <PopoverTrigger asChild>
-            <Avatar className='size-11'>
-              <AvatarImage src={session?.user?.image ?? ''} />
-              <AvatarFallback>{session?.user?.name?.charAt(0)}</AvatarFallback>
-            </Avatar>
-          </PopoverTrigger>
-          <PopoverContent side="bottom" align="end" sideOffset={10}>
-            uyjg
-          </PopoverContent>
-        </Popover>
+        <UserButton session={session} />
       </div>
     </header>
   );
